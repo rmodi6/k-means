@@ -1,3 +1,2 @@
-# kmeans clustering
-kmeans clustering algorithm implemented in Python.
-
+# k-means clustering
+k-means clustering algorithm implemented in Python.

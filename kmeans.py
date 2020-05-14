@@ -36,7 +36,7 @@ def cluster(X, k, distance):
 if __name__ == '__main__':
     distance_functions = {'euclidean': euclidean_distance, 'manhattan': manhattan_distance}
 
-    parser = argparse.ArgumentParser(description="kmeans clustering algorithm")
+    parser = argparse.ArgumentParser(description="k-means clustering algorithm")
 
     parser.add_argument('--dataset', dest='dataset_path', action='store', type=str, help='path to dataset',
                         required=True)
