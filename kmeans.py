@@ -13,13 +13,13 @@ def manhattan_distance(X1, X2):
 
 
 def cluster(X, k, distance):
-    clusters = {i: [] for i in range(k)}
     centroids = X[np.random.choice(X.shape[0], k, replace=False)]
     iteration = 0
     while True:
         iteration += 1
         if iteration % 100 == 0:
             print(f'Iteration: {iteration}')
+        clusters = {i: [] for i in range(k)}
         for Xi in X:
             distances = distance(Xi, centroids)
             clusters[np.argmin(distances)].append(Xi)
