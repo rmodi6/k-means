@@ -4,12 +4,12 @@ import numpy as np
 import pandas as pd
 
 
-def euclidean_distance(X1, X2):
-    return np.sqrt(np.sum(np.square(X1 - X2), axis=1))
+def euclidean_distance(x1, x2):
+    return np.sqrt(np.sum(np.square(x1 - x2), axis=1))
 
 
-def manhattan_distance(X1, X2):
-    return np.sum(np.abs(X1 - X2), axis=1)
+def manhattan_distance(x1, x2):
+    return np.sum(np.abs(x1 - x2), axis=1)
 
 
 def cluster(X, y, k, distance):
