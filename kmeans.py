@@ -12,20 +12,23 @@ def manhattan_distance(X1, X2):
     return np.sum(np.abs(X1 - X2), axis=1)
 
 
-def cluster(X, k, distance):
+def cluster(X, y, k, distance):
     centroids = X[np.random.choice(X.shape[0], k, replace=False)]
     iteration = 0
     while True:
         iteration += 1
         if iteration % 100 == 0:
             print(f'Iteration: {iteration}')
-        clusters = {i: [] for i in range(k)}
-        for Xi in X:
+        clusters = {i: {'data': [], 'label': []} for i in range(k)}
+        for i, Xi in enumerate(X):
             distances = distance(Xi, centroids)
-            clusters[np.argmin(distances)].append(Xi)
+            closest_cluster_id = np.argmin(distances)
+            clusters[closest_cluster_id]['data'].append(Xi)
+            clusters[closest_cluster_id]['label'].append(y[i])
         new_centroids = []
         for cluster_id in clusters:
-            new_centroids.append(np.mean(np.array(clusters[cluster_id]), axis=0))
+            clusters[cluster_id]['data'] = np.array(clusters[cluster_id]['data'])
+            new_centroids.append(np.mean(clusters[cluster_id]['data'], axis=0))
         new_centroids = np.array(new_centroids)
         if np.all(new_centroids == centroids):
             break
@@ -50,4 +53,8 @@ if __name__ == '__main__':
     df = pd.read_csv(args.dataset_path)
 
     X, y = df.iloc[:, :-1].values, df.iloc[:, -1].values
-    clusters = cluster(X, args.k, distance_fn)
+    clusters = cluster(X, y, args.k, distance_fn)
+    for cluster_id in clusters:
+        print(f'Cluster id: {cluster_id}')
+        pos_fraction = np.mean(clusters[cluster_id]['label'])
+        print(f'Fraction of +ve labels: {pos_fraction:.2f}\t Fraction of -ve labels: {1-pos_fraction:.2f}')
