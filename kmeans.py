@@ -53,8 +53,10 @@ if __name__ == '__main__':
     df = pd.read_csv(args.dataset_path)
 
     X, y = df.iloc[:, :-1].values, df.iloc[:, -1].values
-    clusters = cluster(X, y, args.k, distance_fn)
-    for cluster_id in clusters:
-        print(f'Cluster id: {cluster_id}')
-        pos_fraction = np.mean(clusters[cluster_id]['label'])
-        print(f'Fraction of +ve labels: {pos_fraction:.2f}\t Fraction of -ve labels: {1-pos_fraction:.2f}')
+    for run in range(3):
+        print(f'Run: {run+1}')
+        clusters = cluster(X, y, args.k, distance_fn)
+        for cluster_id in clusters:
+            print(f'Cluster id: {cluster_id}')
+            pos_fraction = np.mean(clusters[cluster_id]['label'])
+            print(f'Fraction of +ve labels: {pos_fraction:.2f}\t Fraction of -ve labels: {1 - pos_fraction:.2f}')
